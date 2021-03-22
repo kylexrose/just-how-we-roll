@@ -74,7 +74,8 @@ function reset(){
  * CLICK HANDLING FUNCTIONS *
 ****************************/
 function d6Roller(){
-  let roll = getRandomNumber(6)
+  let roll = getRandomNumber(6);
+  randRoll(6, "d6", roll);
   document.querySelector("#d6-roll").src = `images/d6/${roll}.png`;
   sixes.push(roll);
   doTheNumbers(sixes, 'd6')
@@ -83,6 +84,7 @@ function d6Roller(){
 function doubleD6Roller(){
   let roll1 = getRandomNumber(6);
   let roll2 = getRandomNumber(6);
+  randDouble(roll1, roll2);
   document.querySelector("#double-d6-roll-1").src = `images/d6/${roll1}.png`;
   document.querySelector("#double-d6-roll-2").src = `images/d6/${roll2}.png`;
   doubleSixes.push(roll1 + roll2);
@@ -91,18 +93,46 @@ function doubleD6Roller(){
 
 function d12Roller(){
   let roll = getRandomNumber(12)
+  randRoll(12, "d12", roll);
   document.querySelector("#d12-roll").src = `images/numbers/${roll}.png`;
   twelves.push(roll);
   doTheNumbers(twelves, 'd12')
 }
 
 function d20Roller(){
-  let roll = getRandomNumber(20)
+  let roll = getRandomNumber(20);
+  randRoll(20, "d20", roll);
   document.querySelector("#d20-roll").src = `images/numbers/${roll}.png`;
   twenties.push(roll);
   doTheNumbers(twenties, 'd20')
 }
 
+function randRoll(max, prefix, roll){
+  const file = max > 6 ? 'numbers' : 'd6';
+  let counter = 0;
+  let num = setInterval(() => {
+      document.querySelector(`#${prefix}-roll`).src = `images/${file}/${getRandomNumber(max)}.png`;
+      counter++;
+      if (counter >= 10){
+        clearInterval(num);
+        document.querySelector(`#${prefix}-roll`).src = `images/${file}/${roll}.png`;
+      }
+    }, 50)
+}
+
+function randDouble(roll1, roll2){
+  let counter = 0;
+  let num = setInterval(() => {
+      document.querySelector("#double-d6-roll-1").src = `images/d6/${getRandomNumber(6)}.png`;
+      document.querySelector("#double-d6-roll-2").src = `images/d6/${getRandomNumber(6)}.png`;
+      counter++;
+      if (counter >= 10){
+        clearInterval(num);
+        document.querySelector("#double-d6-roll-1").src = `images/d6/${roll1}.png`;
+        document.querySelector("#double-d6-roll-2").src = `images/d6/${roll2}.png`;
+      }
+    }, 50)
+}
 /****************
  * MATH SECTION *
  ****************/
